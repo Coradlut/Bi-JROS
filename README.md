@@ -3,7 +3,7 @@
 This is the source code of paper "[Bi-JROS: Bi-level Learning of Task-Specific Decoders for Joint Registration and One-Shot Medical Image Segmentation
 ]. 
 
-![The proposed framework](framework.pdf)
+![The proposed framework](framework.png)
 
 ## REQUIREMENTS
 This code requires the following:
