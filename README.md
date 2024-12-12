@@ -16,6 +16,11 @@ This code requires the following:
 * Scikit-image==0.21.0
 * Nibabel==5.2.0 
 
+## DATA
+The datasets used in the paper, ABIDE, ANDI, PPMI, and OASIS, are publicly available for download.  
+For example, ADNI can be applied for and downloaded through the following link: [https://adni.loni.usc.edu/data-samples/adni-data/#AccessData](https://adni.loni.usc.edu/data-samples/adni-data/#AccessData).  
+The download process for ABIDE is described at [https://fcon_1000.projects.nitrc.org/indi/abide/databases.html](https://fcon_1000.projects.nitrc.org/indi/abide/databases.html).  
+Preprocessed ABIDE data can be accessed at [http://preprocessed-connectomes-project.org/abide/index.html](http://preprocessed-connectomes-project.org/abide/index.html).  
 
 ## USAGE
 ### Step 1: Getting Started
