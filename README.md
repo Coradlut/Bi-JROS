@@ -58,4 +58,4 @@ To test the performance:
 python infer.py
 ```
 
-# Adapt our framework to different encoders
+# Adapt different encoders to our framework
