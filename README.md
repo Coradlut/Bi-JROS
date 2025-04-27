@@ -121,3 +121,9 @@ We encourage further exploration and experimentation with these encoders to opti
 ---
 
 **Note:** The Dice coefficient values presented above demonstrate how well each encoder performs across different datasets. These results indicate the effectiveness of our framework in handling various medical imaging challenges.
+
+## Quick Start
+Set hyperparameters ‘enc’(eg. sam, sythseg, bi-jros. and rrl-sam) to select which necoder to adapt to our framework. 
+```
+python train_arbi_enc4dec.py -enc bi-jros
+```
