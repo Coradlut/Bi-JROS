@@ -12,6 +12,7 @@ Risheng Liu<sup>1</sup> </span>
 [🏡 Project Page](https://bi-jros.github.io/) |  [📄 Paper](https://openaccess.thecvf.com/content/CVPR2024/html/Fan_Bi-level_Learning_of_Task-Specific_Decoders_for_Joint_Registration_and_One-Shot_CVPR_2024_paper.html) 
 
 ## 🎺 News
+-  Adapt Different Encoders (eg. sam, synthseg) to Our Framework (updating)
 - [2025/04/22]: ✨We release the model weight of Bi-JROS in the Step 1:Pretrain the shared encder [🤗 Huggingface](https://huggingface.co/jiawang0704/Bi-JROS-Step1/tree/main)
 - [2024/04/23]: ✨We release the train and inference code.
 - [2024/02/27]: ✨This paper was accepted by CVPR 2024!
@@ -58,9 +59,8 @@ To test the performance:
 python infer.py
 ```
 
-# Adapt different encoders to our framework
 
-# Adapt Different Encoders to Our Framework
+# Adapt Different Encoders to Our Framework (Updating)
 
 In this section, we demonstrate how we adapt different encoders to our framework. Specifically, we focus on integrating four encoders: **SAM**, **SynthSeg**, and two of our own proposed methods. We will showcase the results of applying these encoders and provide a brief introduction to each of the methods.
 
