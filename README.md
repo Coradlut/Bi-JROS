@@ -1,7 +1,20 @@
 # Bi-JROS: Bi-level Learning of Task-Specific Decoders for Joint Registration and One-Shot Medical Image Segmentation
 
-This is the source code of paper "[Bi-JROS: Bi-level Learning of Task-Specific Decoders for Joint Registration and One-Shot Medical Image Segmentation
-]. 
+<a href="https://scholar.google.com/citations?user=vLN1njoAAAAJ&hl=zh-CN&oi=ao" target="_blank">Xin Fan</a><sup>1</sup>,
+Xiaolin Wang<sup>1</sup>,</span>
+<a href="https://scholar.google.com/citations?user=MWPKMlsAAAAJ&hl=zh-CN&oi=ao" target="_blank">Jiaxin Gao</a><sup>1</sup>,
+<a href="https://scholar.google.com/citations?user=UNXTe-4AAAAJ&hl=zh-CN" target="_blank">Jia Wang</a><sup>1</sup>,
+Zhongxuan Luo<sup>1</sup>,</span>
+Risheng Liu<sup>1</sup> </span>
+
+<sup>1</sup>School of Software Technology, Dalian University of Technology, Dalian, China &nbsp;&nbsp;
+
+[🏡 Project Page](https://bi-jros.github.io/) |  [📄 Paper](https://openaccess.thecvf.com/content/CVPR2024/html/Fan_Bi-level_Learning_of_Task-Specific_Decoders_for_Joint_Registration_and_One-Shot_CVPR_2024_paper.html) 
+
+## 🎺 News
+- [2025/04/22]: ✨We release the model weight of Bi-JROS in the Step 1:Pretrain the shared encder [🤗 Huggingface](https://huggingface.co/jiawang0704/Bi-JROS-Step1/tree/main)
+- [2024/04/23]: ✨We release the train and inference code.
+- [2024/02/27]: ✨This paper was accepted by CVPR 2024!
 
 ![The proposed framework](framework.png)
 
@@ -45,4 +58,4 @@ To test the performance:
 python infer.py
 ```
 
-
+# Adapt our framework to different encoders
