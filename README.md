@@ -68,35 +68,46 @@ In this section, we demonstrate how we adapt different encoders to our framework
 
 ### SAM (Self-Attention Mechanism)
 
-SAM (Self-Attention Mechanism) uses attention layers to capture long-range dependencies, allowing the model to focus on the most relevant regions of the input. This encoder improves the performance in medical image segmentation by enhancing feature representation through attention-based mechanisms.
+SAM introduces prompt-based guidance to enable fast segmentation of arbitrary targets within an image. Prompts can take various forms, such as points, boxes, masks, or text descriptions. Based on these prompts, the model generates valid segmentation masks. The encoder of SAM consists of two parts: the image encoder and the prompt encoder. The image encoder generates a one-time embedding that captures the overall representation of the input image. The prompt encoder encodes points, boxes, text, or masks into embedding vectors in real time, which are then combined with the image embedding to guide the segmentation process.
 
 #### Key Features:
-- **Attention-based**: Focuses on the relevant parts of the image.
-- **Efficient for high-dimensional data**: Suitable for complex medical image structures.
+- **One-Time Embedding**: Generates a single global image representation with a pre-trained Vision Transformer.
+- **Prompt Encoding**: Dynamically embeds points, boxes, masks, and text to guide segmentation.
+
+**Reference**: [SAM Paper (Kirillov et al., 2023)](https://arxiv.org/abs/2304.02643)
 
 ### SynthSeg
 
-SynthSeg is a method that utilizes synthetic data for training a segmentation model, then fine-tunes the model using real medical images. This helps the model generalize well across different medical datasets.
+SynthSeg trains the network with on-the-fly synthesized images using a Bayesian generative model and domain randomization, enabling it to learn domain-agnostic features and perform direct segmentation on real images without retraining. SynthSeg uses a 3D U-Net encoder to extract domain-agnostic features from on-the-fly synthesized images. By processing inputs with randomized contrast, resolution, and artifacts, the encoder learns robust structural representations for accurate segmentation across diverse domains.
 
 #### Key Features:
-- **Pre-trained on synthetic data**: Uses synthetic data to generalize across different real-world datasets.
-- **Highly efficient for rare conditions**: Helps in segmentation tasks with limited annotated data.
+- **Domain Randomization**: Trained on images with randomized contrast, resolution, noise, and artifacts to ensure robustness.
+- **3D U-Net Architecture**: Uses deep hierarchical features and skip connections to capture both local and global structure.
+- **On-the-Fly Data Augmentation**: Continuously exposed to new synthetic inputs during training, enhancing generalization without retraining.
 
-### Our Proposed Method 1: Encoder-A
+**Reference**: [SynthSeg Paper (Billot et al., 2021)](https://arxiv.org/abs/2107.09559)
 
-Encoder-A is designed to handle fine-grained details by using a multi-scale feature extraction technique. The encoder extracts features at multiple scales and combines them for better feature representation.
+### Our Proposed Method 1: RRL-MedSAM
 
-#### Key Features:
-- **Multi-scale**: Processes images at different resolutions.
-- **Captures fine details**: Focuses on minute anatomical details for improved segmentation.
-
-### Our Proposed Method 2: Encoder-B
-
-Encoder-B combines convolutional networks with recurrent layers, enabling the model to handle both spatial and sequential dependencies. This method is particularly effective for sequential or 3D medical image data.
+RRL-MedSAM adapts SAM for one-shot 3D medical image segmentation by introducing a dual-stage knowledge distillation (DSKD) strategy and a mutual-EMA mechanism to train lightweight general and medical-specific encoders. The General Encoder distilled from SAM for domain-agnostic feature learning and the Medical Encoder specialized for fine-grained 3D medical image segmentation, jointly optimized via mutual-EMA collaboration.
 
 #### Key Features:
-- **Hybrid architecture**: Combines CNNs and recurrent layers.
-- **Effective for sequential/3D data**: Well-suited for tasks like 3D medical image segmentation.
+- **Dual encoders**: General and Medical encoders collaboratively learn domain-agnostic and medical-specific features.
+- **Dual-stage knowledge distillation**: Two-step distillation with mutual-EMA ensures robust and harmonized feature representation.
+- **Auto-prompting decoder**: Automatically generates prompts from coarse masks to enhance segmentation without manual interaction.
+
+**Reference**:
+
+### Our Proposed Method 2: Bi-JROS
+
+Bi-JROS introduces a novel bi-level learning framework for one-shot medical image segmentation, using a pretrained fixed shared encoder to stabilize training and enhance adaptability. It treats registration as the major objective and segmentation as a learnable constraint, while leveraging appearance conformity to generate style-consistent pseudo-labels for data augmentation. The pretrained and fixed shared encoder extracts stable, domain-adaptive features from medical images, providing a common feature space for both the registration and segmentation decoders.
+
+#### Key Features:
+- **Pretrained on diverse unlabeled data**: Extracts stable and domain-adaptive features for one-shot medical segmentation.
+- **Fixed parameters after pretraining**: Prevents feature drift and ensures stable optimization during downstream tasks.
+- **Shared feature space for tasks**: Provides unified features for both registration and segmentation decoders.
+
+**Reference**: [Bi-JROS Paper (Fan et al., 2024)](https://openaccess.thecvf.com/content/CVPR2024/papers/Fan_Bi-level_Learning_of_Task-Specific_Decoders_for_Joint_Registration_and_One-Shot_CVPR_2024_paper.pdf)
 
 ---
 
@@ -104,15 +115,15 @@ Encoder-B combines convolutional networks with recurrent layers, enabling the mo
 
 In this section, we present the results of applying the different encoders to our framework. The **Dice coefficient** is used as the evaluation metric to compare the segmentation performance of each method.
 
-| Encoder Method       | Dice Coefficient (OASIS) | Dice Coefficient (Dataset 2) | Dice Coefficient (Dataset 3) |
+| Encoder Method       | Dice Coefficient (%) [OASIS] | Dice Coefficient [Dataset 2] | Dice Coefficient [Dataset 3] |
 |----------------------|------------------------------|------------------------------|------------------------------|
-| **SAM**              | 0.85                         | --                         | --                         |
-| **SynthSeg**         | 0.88                         | --                         | --                        |
-| **Bi-JROS**        | 0.90                         | --                        | --                         |
-| **RRL-SAM**        | 0.87                         | --                         | --                         |
+| **SAM**              | 71.58                         | --                         | --                         |
+| **SynthSeg**         | --                         | --                         | --                        |
+| **Bi-JROS**        |  81.4                        | --                        | --                         |
+| **RRL-SAM**        | 82.4                         | --                         | --                         |
 
 
-## 3. Conclusion
+<!-- ## 3. Conclusion
 
 By adapting these different encoders into our framework, we are able to leverage the strengths of each method to improve our segmentation accuracy and generalization. SAM and SynthSeg provide strong attention mechanisms and generalization from synthetic data, while our proposed methods offer specialized approaches for fine-grained details and sequential data handling.
 
@@ -120,10 +131,14 @@ We encourage further exploration and experimentation with these encoders to opti
 
 ---
 
-**Note:** The Dice coefficient values presented above demonstrate how well each encoder performs across different datasets. These results indicate the effectiveness of our framework in handling various medical imaging challenges.
+**Note:** The Dice coefficient values presented above demonstrate how well each encoder performs across different datasets. These results indicate the effectiveness of our framework in handling various medical imaging challenges. -->
 
 ## Quick Start
 Set hyperparameters ‘enc’(eg. sam, sythseg, bi-jros. and rrl-sam) to select which necoder to adapt to our framework. 
 ```
 python train_arbi_enc4dec.py -enc bi-jros
+```
+
+```
+python infer_arbi_enc4dec.py 
 ```
