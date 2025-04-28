@@ -63,7 +63,7 @@ python infer.py
 # Adapt Different Encoders to Our Framework (Updating)
 
 In this section, we demonstrate how we adapt different encoders to our framework. Specifically, we focus on integrating four encoders: **SAM**, **SynthSeg**, and two of our own proposed methods. We will showcase the results of applying these encoders and provide a brief introduction to each of the methods.
-![The proposed framework](eco4dec.png)
+![The proposed framework](enc4dec.png)
 ## 1. Introduction to the Methods
 
 ### SAM (Self-Attention Mechanism)
@@ -109,7 +109,7 @@ RRL-MedSAM adapts SAM for one-shot 3D medical image segmentation by introducing 
 - **Dual-stage knowledge distillation**: Two-step distillation with mutual-EMA ensures robust and harmonized feature representation.
 - **Auto-prompting decoder**: Automatically generates prompts from coarse masks to enhance segmentation without manual interaction.
 
-**Reference**:
+**Reference**: **Reference**: [RRL-SAM Paper (Fan et al., 2024)[on hold]](https://arxiv.org/)
 
 ---
 
