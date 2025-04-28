@@ -12,8 +12,8 @@ Risheng Liu<sup>1</sup> </span>
 [🏡 Project Page](https://bi-jros.github.io/) |  [📄 Paper](https://openaccess.thecvf.com/content/CVPR2024/html/Fan_Bi-level_Learning_of_Task-Specific_Decoders_for_Joint_Registration_and_One-Shot_CVPR_2024_paper.html) 
 
 ## 🎺 News
--  Adapt Different Encoders (eg. sam, synthseg) to Our Framework (updating)
-- [2025/04/22]: ✨We release the model weight of Bi-JROS in the Step 1:Pretrain the shared encder [🤗 Huggingface](https://huggingface.co/jiawang0704/Bi-JROS-Step1/tree/main)
+-  [2025/04/28] Adapt Different Encoders (eg. sam, synthseg) to Our Framework (updating).
+- [2025/04/27]: ✨We release the model weight of Bi-JROS in the Step 1:Pretrain the shared encder [🤗 Huggingface](https://huggingface.co/jiawang0704/Bi-JROS-Step1/tree/main)
 - [2024/04/23]: ✨We release the train and inference code.
 - [2024/02/27]: ✨This paper was accepted by CVPR 2024!
 
@@ -63,7 +63,7 @@ python infer.py
 # Adapt Different Encoders to Our Framework (Updating)
 
 In this section, we demonstrate how we adapt different encoders to our framework. Specifically, we focus on integrating four encoders: **SAM**, **SynthSeg**, and two of our own proposed methods. We will showcase the results of applying these encoders and provide a brief introduction to each of the methods.
-
+![The proposed framework](eco4dec.png)
 ## 1. Introduction to the Methods
 
 ### SAM (Self-Attention Mechanism)
@@ -87,18 +87,9 @@ SynthSeg trains the network with on-the-fly synthesized images using a Bayesian 
 
 **Reference**: [SynthSeg Paper (Billot et al., 2021)](https://arxiv.org/abs/2107.09559)
 
-### Our Proposed Method 1: RRL-MedSAM
 
-RRL-MedSAM adapts SAM for one-shot 3D medical image segmentation by introducing a dual-stage knowledge distillation (DSKD) strategy and a mutual-EMA mechanism to train lightweight general and medical-specific encoders. The General Encoder distilled from SAM for domain-agnostic feature learning and the Medical Encoder specialized for fine-grained 3D medical image segmentation, jointly optimized via mutual-EMA collaboration.
 
-#### Key Features:
-- **Dual encoders**: General and Medical encoders collaboratively learn domain-agnostic and medical-specific features.
-- **Dual-stage knowledge distillation**: Two-step distillation with mutual-EMA ensures robust and harmonized feature representation.
-- **Auto-prompting decoder**: Automatically generates prompts from coarse masks to enhance segmentation without manual interaction.
-
-**Reference**:
-
-### Our Proposed Method 2: Bi-JROS
+### Our Proposed Method 1: Bi-JROS
 
 Bi-JROS introduces a novel bi-level learning framework for one-shot medical image segmentation, using a pretrained fixed shared encoder to stabilize training and enhance adaptability. It treats registration as the major objective and segmentation as a learnable constraint, while leveraging appearance conformity to generate style-consistent pseudo-labels for data augmentation. The pretrained and fixed shared encoder extracts stable, domain-adaptive features from medical images, providing a common feature space for both the registration and segmentation decoders.
 
@@ -108,6 +99,17 @@ Bi-JROS introduces a novel bi-level learning framework for one-shot medical imag
 - **Shared feature space for tasks**: Provides unified features for both registration and segmentation decoders.
 
 **Reference**: [Bi-JROS Paper (Fan et al., 2024)](https://openaccess.thecvf.com/content/CVPR2024/papers/Fan_Bi-level_Learning_of_Task-Specific_Decoders_for_Joint_Registration_and_One-Shot_CVPR_2024_paper.pdf)
+
+### Our Proposed Method 2: RRL-MedSAM
+
+RRL-MedSAM adapts SAM for one-shot 3D medical image segmentation by introducing a dual-stage knowledge distillation (DSKD) strategy and a mutual-EMA mechanism to train lightweight general and medical-specific encoders. The General Encoder distilled from SAM for domain-agnostic feature learning and the Medical Encoder specialized for fine-grained 3D medical image segmentation, jointly optimized via mutual-EMA collaboration.
+
+#### Key Features:
+- **Dual encoders**: General and Medical encoders collaboratively learn domain-agnostic and medical-specific features.
+- **Dual-stage knowledge distillation**: Two-step distillation with mutual-EMA ensures robust and harmonized feature representation.
+- **Auto-prompting decoder**: Automatically generates prompts from coarse masks to enhance segmentation without manual interaction.
+
+**Reference**:
 
 ---
 
@@ -134,11 +136,13 @@ We encourage further exploration and experimentation with these encoders to opti
 **Note:** The Dice coefficient values presented above demonstrate how well each encoder performs across different datasets. These results indicate the effectiveness of our framework in handling various medical imaging challenges. -->
 
 ## Quick Start
+- Downloading the pretrained weghts for train in [huggingface](https://huggingface.co/jiawang0704/Multi-encoders).
+
 Set hyperparameters ‘enc’(eg. sam, sythseg, bi-jros. and rrl-sam) to select which necoder to adapt to our framework. 
 ```
 python train_arbi_enc4dec.py -enc bi-jros
 ```
-
+<!-- 
 ```
 python infer_arbi_enc4dec.py 
-```
+``` -->
