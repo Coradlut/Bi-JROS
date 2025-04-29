@@ -82,8 +82,8 @@ def main():
             pretrained_dict_updated = {key: value for key, value in pretrained_dict.items() if (key in model_dict and 'fea_extractor' in key)}
             model_dict.update(pretrained_dict_updated)
             model.load_state_dict(model_dict)
-    elif args.enc == 'sam':
-        model = 
+    # elif args.enc == 'sam':
+    #     model = 
     # elif args.enc == 'synthseg'
     #     model = 
 
